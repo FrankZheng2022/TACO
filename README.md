@@ -18,7 +18,7 @@ Original PyTorch implementation of **TACO** from
 **TACO** is a simple yet powerful temporal contrastive learning approach that facilitates the concurrent acquisition of latent state and action representations for agents. **TACO** simultaneously learns a state and an action representation by optimizing the mutual information between representations of current states paired with action sequences and representations of the corresponding future states.
 
 <p align="center">
-  <img src='media/d818bbc7.png' width="600"/>
+  <img src='media/overview.png' width="600"/>
 </p>
 
 
