@@ -27,6 +27,14 @@ Original PyTorch implementation of **TACO** from
 If you use our method or code in your research, please consider citing the paper as follows:
 
 ```
+@inproceedings{
+zheng2023taco,
+title={\${\textbackslash}texttt\{{TACO}\}\$: Temporal Latent Action-Driven Contrastive Loss for Visual Reinforcement Learning},
+author={Ruijie Zheng and Xiyao Wang and Yanchao Sun and Shuang Ma and Jieyu Zhao and Huazhe Xu and Hal Daumé III and Furong Huang},
+booktitle={Thirty-seventh Conference on Neural Information Processing Systems},
+year={2023},
+url={https://openreview.net/forum?id=ezCsMOy1w9}
+}
 
 ```
 
