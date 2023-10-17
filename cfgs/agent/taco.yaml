@@ -1,0 +1,26 @@
+agent:
+  _target_: agents.taco.TACOAgent
+  obs_shape: ??? # to be specified later
+  action_shape: ??? # to be specified later
+  device: ${device}
+  lr: ${lr}
+  encoder_lr: ${encoder_lr}
+  critic_target_tau: 0.01
+  update_every_steps: 2
+  use_tb: ${use_tb}
+  num_expl_steps: 2000
+  hidden_dim: 1024
+  feature_dim: ${feature_dim}
+  stddev_schedule: ${stddev_schedule}
+  stddev_clip: 0.3
+  curl:   ${curl}
+  reward: ${reward}
+  multistep: ${multistep}
+  latent_a_dim: ${latent_a_dim}
+
+### TACO parameters
+curl: true
+reward: true
+multistep: 3
+latent_a_dim: none
+batch_size: 1024

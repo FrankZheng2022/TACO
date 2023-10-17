@@ -43,18 +43,26 @@ url={https://openreview.net/forum?id=ezCsMOy1w9}
 Assuming that you already have [MuJoCo](http://www.mujoco.org) installed, install dependencies using `conda`:
 
 ```
-conda env create -f environment.yaml
+conda env create -f environment.yml
 conda activate taco
 ```
 
-After installing dependencies, you can train an agent by calling
+After installing dependencies, you can train a **TACO** agent by calling (using quadruped_run as an example):
 
 ```
-python src/train.py task=dog-run
+CUDA_VISIBLE_DEVICES=X python train.py agent=taco task=quadruped_run exp_name=${EXP_NAME} 
+```
+
+To train a **DrQ-v2** agent:
+```
+CUDA_VISIBLE_DEVICES=X python train.py agent=drqv2 task=quadruped_run exp_name=${EXP_NAME} 
 ```
 
 Evaluation videos and model weights can be saved with arguments `save_video=True` and `save_model=True`. Refer to the `cfgs` directory for a full list of options and default hyperparameters.
 
+
+## Acknowledgement
+TACO is licensed under the MIT license. MuJoCo and DeepMind Control Suite are licensed under the Apache 2.0 license. We would like to thank DrQ-v2 authors for open-sourcing the [DrQv2](https://github.com/facebookresearch/drqv2) codebase. Our implementation builds on top of their repository.
 
 
 
