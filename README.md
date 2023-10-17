@@ -9,7 +9,7 @@ Original PyTorch implementation of **TACO** from
 
 <p align="center">
   <br><img src='media/ae591483.png' width="600"/><br>
-   <a href="https://arxiv.org/abs/2203.04955">[Paper]</a>&emsp;<a href="https://nicklashansen.github.io/td-mpc">[Website]</a>
+   <a href="https://arxiv.org/pdf/2306.13229.pdf">[Paper]</a>&emsp;<a href="https://ruijiezheng.com/project/TACO/index.html">[Website]</a>
 </p>
 
 
