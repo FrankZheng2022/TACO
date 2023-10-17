@@ -8,7 +8,7 @@ Original PyTorch implementation of **TACO** from
 
 
 <p align="center">
-  <br><img src='media/ae591483.png' width="600"/><br>
+  <br><img src='media/dmc.gif' width="600"/><br>
    <a href="https://arxiv.org/pdf/2306.13229.pdf">[Paper]</a>&emsp;<a href="https://ruijiezheng.com/project/TACO/index.html">[Website]</a>
 </p>
 
