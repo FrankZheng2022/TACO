@@ -44,7 +44,7 @@ Assuming that you already have [MuJoCo](http://www.mujoco.org) installed, instal
 
 ```
 conda env create -f environment.yaml
-conda activate tdmpc
+conda activate taco
 ```
 
 After installing dependencies, you can train an agent by calling
