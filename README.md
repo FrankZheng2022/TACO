@@ -53,7 +53,7 @@ After installing dependencies, you can train an agent by calling
 python src/train.py task=dog-run
 ```
 
-Evaluation videos and model weights can be saved with arguments `save_video=True` and `save_model=True`. Refer to the `cfgs` directory for a full list of options and default hyperparameters, and see `tasks.txt` for a list of supported tasks.
+Evaluation videos and model weights can be saved with arguments `save_video=True` and `save_model=True`. Refer to the `cfgs` directory for a full list of options and default hyperparameters.
 
 
 
