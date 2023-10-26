@@ -92,15 +92,6 @@ class TACO(nn.Module):
             nn.Linear(hidden_dim, 1)
         )
         
-        ### for soda
-        self.predictor = nn.Sequential(
-            nn.Linear(feature_dim, hidden_dim), 
-            nn.ReLU(),
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, feature_dim),
-        )
-
         self.W = nn.Parameter(torch.rand(feature_dim, feature_dim))
         self.apply(utils.weight_init)
     
@@ -233,7 +224,6 @@ class TACOAgent:
         self.taco_opt = torch.optim.Adam(self.TACO.parameters(), lr=encoder_lr)
         
         self.cross_entropy_loss = nn.CrossEntropyLoss()
-        self.mse_loss = nn.MSELoss()
         
         # data augmentation
         self.aug = RandomShiftsAug(pad=4)
@@ -333,10 +323,10 @@ class TACOAgent:
         action_en = self.TACO.act_tok(action, seq=False) 
         action_seq_en = self.TACO.act_tok(action_seq, seq=True)
         
-        ### Compute reward predictino loss
+        ### Compute reward prediction loss
         if self.reward:
             reward_pred = self.TACO.reward(torch.concat([z_a, action_seq_en], dim=-1))
-            reward_loss = self.mse_loss(reward_pred, reward)
+            reward_loss = F.mse_loss(reward_pred, reward)
         else:
             reward_loss = torch.tensor(0.)
         
