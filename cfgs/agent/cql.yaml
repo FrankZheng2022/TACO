@@ -1,0 +1,23 @@
+temp: 1.0
+
+agent:
+  _target_: agents.cql.CQLAgent
+  obs_shape: ??? # to be specified later
+  action_shape: ??? # to be specified later
+  device: ${device}
+  lr: ${lr}
+  critic_target_tau: 0.01
+  update_every_steps: 2
+  num_expl_steps: 2000
+  hidden_dim: 1024
+  feature_dim: ${feature_dim}
+  stddev_schedule: ${stddev_schedule}
+  stddev_clip: 0.3
+  cql_importance_sample: False
+  temp: ${temp}
+  min_q_weight: 0.1
+  num_random: 10
+  with_lagrange: False
+  lagrange_thresh: 0.0
+
+batch_size: 256
