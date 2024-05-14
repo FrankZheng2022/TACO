@@ -1,4 +1,4 @@
-min_q_weight: 0.1
+temp: 1.0
 
 agent:
   _target_: agents.cql.CQLAgent
@@ -14,8 +14,8 @@ agent:
   stddev_schedule: ${stddev_schedule}
   stddev_clip: 0.3
   cql_importance_sample: False
-  temp: 1.0
-  min_q_weight: ${min_q_weight}
+  temp: ${temp}
+  min_q_weight: 0.1
   num_random: 10
   with_lagrange: False
   lagrange_thresh: 0.0
