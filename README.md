@@ -56,7 +56,7 @@ Choose ``${DATASET_TYPE}$`` from ``replay, mediumreplay, medium`` (For example, 
 
 To train a **DrQv2-BC** agent:
 ```
-CUDA_VISIBLE_DEVICES=X python train.py agent=drqv2_bc task=${TASK_NAME} exp_name=${EXP_NAME} seed=1 offline_data_dir=${OFFLINE_DATA_DIR} 
+CUDA_VISIBLE_DEVICES=X python train.py agent=drqv2_bc task=${TASK_NAME} exp_name=${EXP_NAME} seed=${SEED} offline_data_dir=${OFFLINE_DATA_DIR} 
 ```
 
 ``${OFFLINE_DATA_DIR}`` is where the downloaded offline dataset gets stored. Refer to the `cfgs` directory for a full list of options and default hyperparameters.
