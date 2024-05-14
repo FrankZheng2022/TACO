@@ -131,8 +131,8 @@ class CQLAgent:
         ### CQL Parameters
         self.cql_importance_sample = cql_importance_sample
         self.temp = temp
-        self.min_q_weight = 1.0
-        self.num_random = 10
+        self.min_q_weight = min_q_weight
+        self.num_random = num_random
         self.with_lagrange = with_lagrange
         self.target_action_gap = lagrange_thresh
         self.log_alpha_prime = torch.zeros(1, requires_grad=True, device=device)
