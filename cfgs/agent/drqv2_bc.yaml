@@ -1,16 +1,18 @@
+bc_weight: 2.5
 agent:
-  _target_: agents.drqv2.DrQV2Agent
+  _target_: agents.drqv2_bc.DRQV2BCAgent
   obs_shape: ??? # to be specified later
   action_shape: ??? # to be specified later
   device: ${device}
   lr: ${lr}
   critic_target_tau: 0.01
   update_every_steps: 2
-  use_tb: ${use_tb}
   num_expl_steps: 2000
   hidden_dim: 1024
   feature_dim: ${feature_dim}
   stddev_schedule: ${stddev_schedule}
   stddev_clip: 0.3
+  bc: True
+  bc_weight: ${bc_weight}
 
 batch_size: 256

@@ -1,23 +1,24 @@
+# Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
+#
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
 import csv
 import datetime
 from collections import defaultdict
 
 import numpy as np
 import torch
-import torchvision
+# import torchvision
 from termcolor import colored
 from torch.utils.tensorboard import SummaryWriter
 
-COMMON_TRAIN_FORMAT = [('frame', 'F', 'int'), ('step', 'S', 'int'),
-                       ('episode', 'E', 'int'), ('episode_length', 'L', 'int'),
-                       ('episode_reward', 'R', 'float'),
-                       ('buffer_size', 'BS', 'int'), ('fps', 'FPS', 'float'),
+OFFLINE_TRAIN_FORMAT = [('step', 'S', 'int'),
                        ('total_time', 'T', 'time')]
 
-COMMON_EVAL_FORMAT = [('frame', 'F', 'int'), ('step', 'S', 'int'),
-                      ('episode', 'E', 'int'), ('episode_length', 'L', 'int'),
-                      ('episode_reward', 'R', 'float'),
+OFFLINE_EVAL_FORMAT = [('step', 'S', 'int'),
+                      ('eval_reward', 'R', 'float'),
                       ('total_time', 'T', 'time')]
+
 
 
 class AverageMeter(object):
@@ -60,7 +61,7 @@ class MetersGroup(object):
         with self._csv_file_name.open('r') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                if float(row['episode']) >= data['episode']:
+                if float(row['step']) >= data['step']:
                     break
                 rows.append(row)
         with self._csv_file_name.open('w') as f:
@@ -106,25 +107,28 @@ class MetersGroup(object):
         for key, disp_key, ty in self._formating:
             value = data.get(key, 0)
             pieces.append(self._format(disp_key, value, ty))
-        print(' | '.join(pieces), flush=True)
+        print(' | '.join(pieces))
 
     def dump(self, step, prefix):
         if len(self._meters) == 0:
             return
         data = self._prime_meters()
-        data['frame'] = step
+        if 'frame' in data:
+            data['frame'] = step
         self._dump_to_csv(data)
         self._dump_to_console(data, prefix)
         self._meters.clear()
 
 
 class Logger(object):
-    def __init__(self, log_dir, use_tb):
+    def __init__(self, log_dir, use_tb, offline=False):
         self._log_dir = log_dir
+        train_formatting = OFFLINE_TRAIN_FORMAT
+        eval_formatting = OFFLINE_EVAL_FORMAT
         self._train_mg = MetersGroup(log_dir / 'train.csv',
-                                     formating=COMMON_TRAIN_FORMAT)
+                                     formating=train_formatting)
         self._eval_mg = MetersGroup(log_dir / 'eval.csv',
-                                    formating=COMMON_EVAL_FORMAT)
+                                    formating=eval_formatting)
         if use_tb:
             self._sw = SummaryWriter(str(log_dir / 'tb'))
         else:

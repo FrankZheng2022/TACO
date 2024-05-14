@@ -21,6 +21,6 @@ agent:
 ### TACO parameters
 curl: true
 reward: true
-multistep: 3
 latent_a_dim: none
 batch_size: 1024
+multistep: 3
