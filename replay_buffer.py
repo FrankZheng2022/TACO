@@ -142,6 +142,9 @@ class ReplayBuffer(IterableDataset):
         eps_fns = sorted(self._replay_dir.glob('*.npz'), reverse=True)
         for eps_fn in eps_fns:
             self._store_episode(eps_fn)
+        if len(self._episode_fns) == 0:
+            print('No trajectory is loaded, the offline dataset path is wrong!')
+            raise Exception
     
     def _sample(self):
         try:
