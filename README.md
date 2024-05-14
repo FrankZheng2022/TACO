@@ -1,6 +1,6 @@
 # TACO: Temporal Action-driven Contrastive Learning
 
-Original PyTorch implementation of **TACO** from
+This thread contains the original PyTorch implementation of **TACO** for **offline visual RL** from
 
 [TACO: Temporal Latent Action-Driven Contrastive Loss for Visual Reinforcement Learning](https://arxiv.org/pdf/2306.13229.pdf) by
 
@@ -47,18 +47,19 @@ conda env create -f environment.yml
 conda activate taco
 ```
 
-After installing dependencies, you can train a **TACO** agent by calling (using quadruped_run as an example):
+To download the data:
+```
+wget https://obj.umiacs.umd.edu/taco-offline/${TASK_NAME}_${DATASET_TYPE}.zip
+```
+Choose ``${DATASET_TYPE}$`` from ``replay, mediumreplay, medium`` (For example, ``wget https://obj.umiacs.umd.edu/taco-offline/hopper_hop_replay.zip``.)
 
+
+To train a **DrQv2-BC** agent:
 ```
-CUDA_VISIBLE_DEVICES=X python train.py agent=taco task=quadruped_run exp_name=${EXP_NAME} 
+CUDA_VISIBLE_DEVICES=X python train.py agent=drqv2_bc task=${TASK_NAME} exp_name=${EXP_NAME} seed=1 offline_data_dir=${OFFLINE_DATA_DIR} 
 ```
 
-To train a **DrQ-v2** agent:
-```
-CUDA_VISIBLE_DEVICES=X python train.py agent=drqv2 task=quadruped_run exp_name=${EXP_NAME} 
-```
-
-Evaluation videos and model weights can be saved with arguments `save_video=True` and `save_model=True`. Refer to the `cfgs` directory for a full list of options and default hyperparameters.
+``${OFFLINE_DATA_DIR}`` is where the downloaded offline dataset gets stored. Refer to the `cfgs` directory for a full list of options and default hyperparameters.
 
 
 ## Acknowledgement
