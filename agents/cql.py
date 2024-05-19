@@ -116,14 +116,11 @@ class Critic(nn.Module):
 
 class CQLAgent:
     def __init__(self, obs_shape, action_shape, device, lr, feature_dim,
-                 hidden_dim, critic_target_tau, num_expl_steps,
-                 update_every_steps, stddev_schedule, stddev_clip,
+                 hidden_dim, critic_target_tau, stddev_schedule, stddev_clip,
                  cql_importance_sample=False, temp=1.0, min_q_weight=1.0,
                  num_random=10, with_lagrange=False, lagrange_thresh=0.0):
         self.device = device
         self.critic_target_tau = critic_target_tau
-        self.update_every_steps = update_every_steps
-        self.num_expl_steps = num_expl_steps
         self.stddev_schedule = stddev_schedule
         self.stddev_clip = stddev_clip
         
@@ -177,8 +174,6 @@ class CQLAgent:
             action = dist.mean
         else:
             action = dist.sample(clip=None)
-            if step < self.num_expl_steps:
-                action.uniform_(-1.0, 1.0)
         return action.cpu().numpy()[0]
 
     def update_critic(self, obs, action, reward, discount, next_obs, step):
@@ -301,8 +296,6 @@ class CQLAgent:
     
     def update(self, replay_iter, step):
         metrics = dict()
-        if step % self.update_every_steps != 0:
-            return metrics
         
         batch = next(replay_iter)
         obs, action, action_seq, reward, discount, next_obs, r_next_obs = utils.to_torch(

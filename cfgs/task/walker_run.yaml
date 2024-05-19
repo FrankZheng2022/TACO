@@ -1,7 +1,7 @@
 defaults:
-  - medium
   - _self_
 
 task_name: walker_run
 nstep: 1
 batch_size: 512
+taco_multistep: 1

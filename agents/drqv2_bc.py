@@ -116,13 +116,10 @@ class Critic(nn.Module):
     
 class DRQV2BCAgent:
     def __init__(self, obs_shape, action_shape, device, lr, feature_dim,
-                 hidden_dim, critic_target_tau, num_expl_steps,
-                 update_every_steps, stddev_schedule, stddev_clip,
+                 hidden_dim, critic_target_tau, stddev_schedule, stddev_clip,
                  bc=True, bc_weight=2.5):
         self.device = device
         self.critic_target_tau = critic_target_tau
-        self.update_every_steps = update_every_steps
-        self.num_expl_steps = num_expl_steps
         self.stddev_schedule = stddev_schedule
         self.stddev_clip = stddev_clip
         
@@ -168,8 +165,6 @@ class DRQV2BCAgent:
             action = dist.mean
         else:
             action = dist.sample(clip=None)
-            if step < self.num_expl_steps:
-                action.uniform_(-1.0, 1.0)
         return action.cpu().numpy()[0]
 
     def update_critic(self, obs, action, reward, discount, next_obs, step):
@@ -236,8 +231,6 @@ class DRQV2BCAgent:
     
     def update(self, replay_iter, step):
         metrics = dict()
-        if step % self.update_every_steps != 0:
-            return metrics
         
         batch = next(replay_iter)
         obs, action, action_seq, reward, discount, next_obs, r_next_obs = utils.to_torch(

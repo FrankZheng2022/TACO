@@ -6,11 +6,9 @@ agent:
   device: ${device}
   lr: ${lr}
   critic_target_tau: 0.01
-  update_every_steps: 2
-  num_expl_steps: 2000
   hidden_dim: 1024
   feature_dim: ${feature_dim}
-  stddev_schedule: ${stddev_schedule}
+  stddev_schedule: 'linear(1.0,0.1,10000)'
   stddev_clip: 0.3
   bc: True
   bc_weight: ${bc_weight}

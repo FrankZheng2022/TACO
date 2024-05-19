@@ -75,7 +75,7 @@ class ReplayBufferStorage:
 
 
 class ReplayBuffer(IterableDataset):
-    def __init__(self, replay_dir, max_size, num_workers, nstep,  multistep, 
+    def __init__(self, replay_dir, max_size, num_workers, nstep,  taco_multistep, 
                  discount, fetch_every, save_snapshot):
         self._replay_dir = replay_dir
         self._size = 0
@@ -88,7 +88,7 @@ class ReplayBuffer(IterableDataset):
         self._fetch_every = fetch_every
         self._samples_since_last_fetch = fetch_every
         self._save_snapshot = save_snapshot
-        self._multistep = multistep
+        self._taco_multistep = taco_multistep
         print('Loading Data into CPU Memory')
         self._preload()
 
@@ -154,12 +154,12 @@ class ReplayBuffer(IterableDataset):
         self._samples_since_last_fetch += 1
         episode = self._sample_episode()
         # add +1 for the first dummy transition
-        n_step = max(self._nstep, self._multistep)
+        n_step = max(self._nstep, self._taco_multistep)
         idx = np.random.randint(0, episode_len(episode) - n_step + 1) + 1
         obs = episode['observation'][idx - 1]
-        r_next_obs = episode['observation'][idx + self._multistep - 1]
+        r_next_obs = episode['observation'][idx + self._taco_multistep - 1]
         action = episode['action'][idx]
-        action_seq = np.concatenate([episode['action'][idx+i][None, :] for i in range(self._multistep)])
+        action_seq = np.concatenate([episode['action'][idx+i][None, :] for i in range(self._taco_multistep)])
         next_obs = episode['observation'][idx + self._nstep - 1]
         reward = np.zeros_like(episode['reward'][idx])
         discount = np.ones_like(episode['discount'][idx])
@@ -181,14 +181,14 @@ def _worker_init_fn(worker_id):
 
 
 def make_replay_loader(replay_dir, max_size, batch_size, num_workers,
-                       save_snapshot, nstep, multistep, discount):
+                       save_snapshot, nstep, taco_multistep, discount):
     max_size_per_worker = max_size // max(1, num_workers)
     
     iterable = ReplayBuffer(replay_dir,
                             max_size_per_worker,
                             num_workers,
                             nstep,
-                            multistep,
+                            taco_multistep,
                             discount,
                             fetch_every=1000,
                             save_snapshot=save_snapshot)

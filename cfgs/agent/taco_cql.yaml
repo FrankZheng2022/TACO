@@ -1,0 +1,30 @@
+### TACO parameters
+curl: true
+reward: true
+latent_a_dim: null
+batch_size: 1024
+
+### CQL Temperature Parameter
+temp: 1.0
+
+agent:
+  _target_: agents.taco_cql.TACOCQLAgent
+  obs_shape: ??? # to be specified later
+  action_shape: ??? # to be specified later
+  device: ${device}
+  lr: ${lr}
+  critic_target_tau: 0.01
+  hidden_dim: 1024
+  feature_dim: ${feature_dim}
+  stddev_schedule: 'linear(1.0,0.1,10000)'
+  stddev_clip: 0.3
+  cql_importance_sample: False
+  temp: ${temp}
+  min_q_weight: 0.1
+  num_random: 10
+  with_lagrange: False
+  lagrange_thresh: 0.0
+  curl: ${curl}
+  reward: ${reward}
+  latent_a_dim: ${latent_a_dim}
+  taco_multistep: ${taco_multistep}

@@ -58,7 +58,7 @@ class Workspace:
         self.replay_loader = make_replay_loader(
             Path(self.cfg.offline_data_dir), self.cfg.replay_buffer_size,
             self.cfg.batch_size, self.cfg.replay_buffer_num_workers,
-            True, self.cfg.nstep, self.cfg.multistep, self.cfg.discount)
+            True, self.cfg.nstep, self.cfg.taco_multistep, self.cfg.discount)
         self._replay_iter = None
 
 
